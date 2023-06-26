@@ -20,14 +20,19 @@ const gameboard = (function () {
         boardElements.forEach(boardElement => boardElement.addEventListener('click', makeMove));
     };
 
-    const _checkGameOver = () => {s
+    const removeEventListeners = () => {
+        boardElements.forEach(boardElement => boardElement.removeEventListener('click', makeMove));
+    }
+
+    const _checkGameOver = () => {
+        let gameOver = false;
         // Check rows
         for(let i = 0; i < board.length; i++) {
             if(board[i][0] === '' || board[i][1] === ''  || board[i][2] === '' ) { /* Check if any relevant space empty */
                 continue;
             }
             if(board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-                return true;
+                gameOver = true;
             }
         }
         // Check cols
@@ -36,24 +41,24 @@ const gameboard = (function () {
                 continue;
             }
             if(board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
-                return true;
+                gameOver = true;
             }
         }
         // Check top left-bottom right diagonal
         if(board[0][0] === '' && board[1][1] === ''  && board[2][2] === '' ) { /* Check if any relevant space empty */
             if(board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
-                return true;
+                gameOver = true;
             }
         }
         
         // Check bottom left-top right diagonal
         if(board[2][0] === '' && board[1][1] === ''  && board[0][2] === '' ) { /* Check if any relevant space empty */
             if(board[2][0] === board[1][1] && board[1][1] === board[0][2]) {
-                return true;
+                gameOver = true;
             }
         }
         // No win found
-        return false;
+        return gameOver;
     };
 
     const _updateBoard = () => {

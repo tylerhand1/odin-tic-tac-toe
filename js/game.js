@@ -17,17 +17,28 @@ const gameboard = (function () {
     const players = ['X', 'O'];
     const board = [['', '', ''], ['', '', ''], ['', '', '']];
     const boardElements = [...document.querySelectorAll('.game-space')];
+    const startBtn = document.querySelector('#start-btn');
     const restartBtn = document.querySelector('#restart-btn');
     // Display elements
     const customSelect = document.querySelector('.custom-select');
     const playerTurn = document.querySelector('.player-turn');
     const playerTurnMsg = document.querySelector('.player-turn h3');
 
-    const createRestartEventListener = () => {
+    const createBtnEventListeners = () => {
+        startBtn.addEventListener('click', _start);
         restartBtn.addEventListener('click', clearBoard);
     };
 
-    const createEventListeners = () => {
+    const _start = () => {
+        _createEventListeners();
+        if(!playerDisplay) {
+            _togglePlayerDisplay();
+            playerDisplay = true;
+        }
+        playerTurnMsg.textContent = `Player ${players[currPlayer]}'s Turn`;
+    }
+
+    const _createEventListeners = () => {
         boardElements.forEach(boardElement => boardElement.addEventListener('click', makeMove));
     };
 
@@ -41,7 +52,7 @@ const gameboard = (function () {
     }
 
     const _checkGameOver = () => {
-        let winner = 0; // -1: X, 0: tie, 1: Y
+        let winner = 2; // -1: X, 0: tie, 1: Y, 2: game not over
         let tie = true;
         // Check rows
         for(let i = 0; i < board.length; i++) {
@@ -94,18 +105,21 @@ const gameboard = (function () {
                 gameOver = true;
             }
         }
-        if(winner === 0) {
+        if(winner === 2) {
             for(let i = 0; i < board.length; i++) {
                 if(board[i][0] === '' || board[i][1] === '' || board[i][2] === '') {
                     tie = false;
                 }
+            }
+            if(tie) {
+                winner = 0;
             }
         }
             
         if(gameOver || tie) {
             _removeEventListeners();
         }
-        // No win found
+
         return winner;
     };
 
@@ -123,10 +137,6 @@ const gameboard = (function () {
     }
 
     const makeMove = (e) => {
-        if(!playerDisplay) {
-            _togglePlayerDisplay();
-            playerDisplay = true;
-        }
         // Convert data-index to (row, col)
         let row, col;
         if(e.target.attributes[1].value < 3) {
@@ -144,15 +154,21 @@ const gameboard = (function () {
         }
         board[row][col] = players[currPlayer];
         _updateBoard();
-        _checkGameOver();
-        _switchPlayer();
-        
-        playerTurnMsg.textContent = `Player ${players[currPlayer]}'s Turn`;
+        let result = _checkGameOver();
+        if(result !== 0) {
+            if(result === 2) {
+                _switchPlayer();
+                playerTurnMsg.textContent = `Player ${players[currPlayer]}'s Turn`;
+            } else {
+                playerTurnMsg.textContent = `Player ${players[currPlayer]} Won!`;
+            }
+        } else  {
+            playerTurnMsg.textContent = `Tie!`;
+        }
     };
 
     const clearBoard = () => {
         currPlayer = 0;
-        playerDisplay = false;
         gameOver = false;
         if(playerDisplay) {
             _togglePlayerDisplay();
@@ -175,12 +191,10 @@ const gameboard = (function () {
     };
 
     return {
-        createEventListeners,
-        createRestartEventListener,
+        createBtnEventListeners,
         makeMove,
         clearBoard,
     };
 })();
 
-gameboard.createEventListeners();
-gameboard.createRestartEventListener();
+gameboard.createBtnEventListeners();

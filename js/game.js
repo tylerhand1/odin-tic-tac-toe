@@ -12,26 +12,39 @@ const playerTwo = Player('O', 0);
 
 const gameboard = (function () {
     let currPlayer = 0;
+    let gameOver = false;
+    let playerDisplay = false;
     const players = ['X', 'O'];
     const board = [['', '', ''], ['', '', ''], ['', '', '']];
     const boardElements = [...document.querySelectorAll('.game-space')];
+    const restartBtn = document.querySelector('#restart-btn');
+
+    const createRestartEventListener = () => {
+        restartBtn.addEventListener('click', clearBoard);
+    };
 
     const createEventListeners = () => {
         boardElements.forEach(boardElement => boardElement.addEventListener('click', makeMove));
     };
 
-    const removeEventListeners = () => {
+    const _removeEventListeners = () => {
         boardElements.forEach(boardElement => boardElement.removeEventListener('click', makeMove));
     }
 
     const _checkGameOver = () => {
-        let gameOver = false;
+        let winner = 0; // -1: X, 0: tie, 1: Y
+        let tie = true;
         // Check rows
         for(let i = 0; i < board.length; i++) {
             if(board[i][0] === '' || board[i][1] === ''  || board[i][2] === '' ) { /* Check if any relevant space empty */
                 continue;
             }
             if(board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+                if(board[i][0] === 'X') {
+                    winner = -1;
+                } else {
+                    winner = 1;
+                }
                 gameOver = true;
             }
         }
@@ -41,24 +54,50 @@ const gameboard = (function () {
                 continue;
             }
             if(board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+                if(board[0][i] === 'X') {
+                    winner = -1;
+                } else {
+                    winner = 1;
+                }
                 gameOver = true;
             }
         }
         // Check top left-bottom right diagonal
-        if(board[0][0] === '' && board[1][1] === ''  && board[2][2] === '' ) { /* Check if any relevant space empty */
+        if(board[0][0] !== '' && board[1][1] !== ''  && board[2][2] !== '' ) { /* Check if any relevant space empty */
             if(board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+                if(board[0][0] === 'X') {
+                    winner = -1;
+                } else {
+                    winner = 1;
+                }
                 gameOver = true;
             }
         }
         
         // Check bottom left-top right diagonal
-        if(board[2][0] === '' && board[1][1] === ''  && board[0][2] === '' ) { /* Check if any relevant space empty */
+        if(board[2][0] !== '' && board[1][1] !== ''  && board[0][2] !== '' ) { /* Check if any relevant space empty */
             if(board[2][0] === board[1][1] && board[1][1] === board[0][2]) {
+                if(board[2][0] === 'X') {
+                    winner = -1;
+                } else {
+                    winner = 1;
+                }
                 gameOver = true;
             }
         }
+        if(winner === 0) {
+            for(let i = 0; i < board.length; i++) {
+                if(board[i][0] === '' || board[i][0] === '' || board[i][0] === '') {
+                    tie = false;
+                }
+            }
+        }
+            
+        if(gameOver || tie) {
+            _removeEventListeners();
+        }
         // No win found
-        return gameOver;
+        return winner;
     };
 
     const _updateBoard = () => {
@@ -75,6 +114,7 @@ const gameboard = (function () {
     }
 
     const makeMove = (e) => {
+        
         // Convert data-index to (row, col)
         let row, col;
         if(e.target.attributes[1].value < 3) {
@@ -97,11 +137,16 @@ const gameboard = (function () {
     };
 
     const clearBoard = () => {
+        currPlayer = 0;
+        playerDisplay = false;
+        let counter = 0;
         for(let i = 0; i < board.length; i++) {
             for(let j = 0; j < board[i].length; j++) {
                 board[i][j] = '';
+                boardElements[counter++].textContent = '';
             }
         }
+        gameOver = false;
     };
 
     const _printBoard = () => {
@@ -112,9 +157,11 @@ const gameboard = (function () {
 
     return {
         createEventListeners,
+        createRestartEventListener,
         makeMove,
         clearBoard,
     };
 })();
 
 gameboard.createEventListeners();
+gameboard.createRestartEventListener();

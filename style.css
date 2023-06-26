@@ -8,13 +8,18 @@
     /* outline: 1px solid red; */
 }
 
+/* Variables */
+
 :root {
     --gray: #2d3436;
+    --light-gray: #dfe6e9;
     --white: #eeeeee;
     --blue: #0984e3;
     --pink: #e84393;
 
-    --border-radius: 8px;
+    --blue-pink-gradient: linear-gradient(90deg, var(--blue), var(--pink));
+
+    --border-radius: 4px;
     --game-board-size: 300px;
 }
 
@@ -44,9 +49,13 @@ body {
     width: 100%;
 }
 
-.header {
-    background: linear-gradient(90deg, var(--blue), var(--pink));
+.header,
+.btn {
+    background: var(--blue-pink-gradient);
     color: var(--white);
+}
+
+.header {
     border-bottom: 2px solid var(--gray);
 }
 
@@ -85,4 +94,19 @@ body {
     font-size: 70px;
 
     cursor: pointer;
+}
+
+/* Restart Button */
+
+.btn {
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 24px;
+    padding: 12px 24px;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: var(--light-gray);
 }

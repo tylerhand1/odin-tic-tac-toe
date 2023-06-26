@@ -78,6 +78,7 @@ body {
 /* Source: https://moderncss.dev/custom-select-styles-with-pure-css/ */
 
 .top-container {
+    width: 100%;
     min-height: 75px;
     display: flex;
     justify-content: center;
@@ -101,7 +102,7 @@ body {
     border: 2px solid #ff7675;
     border-radius: var(--border-radius);
     padding: 0.25em 0.5em;
-    width: 100%;
+    width: 50;
     font-size: 1.25rem;
     cursor: pointer;
     line-height: 1.1;
@@ -109,7 +110,10 @@ body {
 }
 
 .custom-select.active {
-    display: block;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
 }
 
 .player-turn.active {

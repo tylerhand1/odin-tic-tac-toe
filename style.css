@@ -77,6 +77,13 @@ body {
 /* Custom select */
 /* Source: https://moderncss.dev/custom-select-styles-with-pure-css/ */
 
+.top-container {
+    min-height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .custom-select,
 .player-turn {
     display: none;
@@ -176,6 +183,10 @@ body {
     .custom-select,
     .btn {
         margin: 24px 0;
+    }
+
+    .top-container {
+        min-height: 100px;
     }
 
     .footer {

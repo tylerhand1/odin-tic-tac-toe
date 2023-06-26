@@ -21,6 +21,7 @@
 
     --border-radius: 4px;
     --game-board-size: 300px;
+    --margin-main: 16px 0;
 }
 
 html {
@@ -73,6 +74,31 @@ body {
     justify-content: space-around;
 }
 
+/* Custom select */
+/* Source: https://moderncss.dev/custom-select-styles-with-pure-css/ */
+
+.custom-select {
+    position: relative;
+    margin: var(--margin-main);
+}
+
+.custom-select select {
+    appearance: none;
+
+    background-color: transparent;
+    border: 2px solid #ff7675;
+    border-radius: var(--border-radius);
+    padding: 0.25em 0.5em;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1.25rem;
+    cursor: inherit;
+    line-height: 1.1;
+    text-align: center;
+}
+
+/* Gameboard */
+
 .gameboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -103,7 +129,7 @@ body {
     border-radius: var(--border-radius);
     font-size: 24px;
     padding: 12px 24px;
-    margin-top: 16px;
+    margin: var(--margin-main);
     cursor: pointer;
 }
 

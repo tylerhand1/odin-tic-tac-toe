@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"> 
+    <title>Tic-Tac-Toe</title>
+    <script defer src="js/game.js"></script>
+    <script defer src="js/footer.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">Tic-Tac-Toe</h1>
+    </header>
+    <main class="main">
+        <div class="container">
+            <form action="#">
+                <select name="game-type" id="game-type">
+                    <option value="player">Player vs Player</option>
+                    <option value="computer">Player vs AI</option>
+                </select>
+            </form>
+            <div class="gameboard">
+                <div class="game-space" date-index="0">X</div>
+                <div class="game-space" date-index="1">O</div>
+                <div class="game-space" date-index="2"></div>
+                <div class="game-space" date-index="3"></div>
+                <div class="game-space" date-index="4"></div>
+                <div class="game-space" date-index="5"></div>
+                <div class="game-space" date-index="6"></div>
+                <div class="game-space" date-index="7"></div>
+                <div class="game-space" date-index="8"></div>
+            </div>
+            <div class="restart">
+                <button id="restart-btn">Restart</button>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p id="footer-text"></p>
+    </footer>
+    
+</body>
+</html>

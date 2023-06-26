@@ -77,6 +77,11 @@ body {
 /* Custom select */
 /* Source: https://moderncss.dev/custom-select-styles-with-pure-css/ */
 
+.custom-select,
+.player-turn {
+    display: none;
+}
+
 .custom-select {
     position: relative;
     margin: var(--margin-main);
@@ -94,6 +99,19 @@ body {
     cursor: pointer;
     line-height: 1.1;
     text-align: center;
+}
+
+.custom-select.active {
+    display: block;
+}
+
+.player-turn.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    font-size: 24px;
 }
 
 /* Gameboard */
@@ -180,6 +198,10 @@ body {
 
     .custom-select select {
         padding: 0.4em 0.65em;
+    }
+
+    .player-turn.active {
+        font-size: 36px;
     }
 
     .game-space {

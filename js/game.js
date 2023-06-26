@@ -18,6 +18,10 @@ const gameboard = (function () {
     const board = [['', '', ''], ['', '', ''], ['', '', '']];
     const boardElements = [...document.querySelectorAll('.game-space')];
     const restartBtn = document.querySelector('#restart-btn');
+    // Display elements
+    const customSelect = document.querySelector('.custom-select');
+    const playerTurn = document.querySelector('.player-turn');
+    const playerTurnMsg = document.querySelector('.player-turn h3');
 
     const createRestartEventListener = () => {
         restartBtn.addEventListener('click', clearBoard);
@@ -29,6 +33,11 @@ const gameboard = (function () {
 
     const _removeEventListeners = () => {
         boardElements.forEach(boardElement => boardElement.removeEventListener('click', makeMove));
+    }
+
+    const _togglePlayerDisplay = () => {
+        customSelect.classList.toggle('active');
+        playerTurn.classList.toggle('active');
     }
 
     const _checkGameOver = () => {
@@ -87,7 +96,7 @@ const gameboard = (function () {
         }
         if(winner === 0) {
             for(let i = 0; i < board.length; i++) {
-                if(board[i][0] === '' || board[i][0] === '' || board[i][0] === '') {
+                if(board[i][0] === '' || board[i][1] === '' || board[i][2] === '') {
                     tie = false;
                 }
             }
@@ -114,7 +123,10 @@ const gameboard = (function () {
     }
 
     const makeMove = (e) => {
-        
+        if(!playerDisplay) {
+            _togglePlayerDisplay();
+            playerDisplay = true;
+        }
         // Convert data-index to (row, col)
         let row, col;
         if(e.target.attributes[1].value < 3) {
@@ -134,10 +146,18 @@ const gameboard = (function () {
         _updateBoard();
         _checkGameOver();
         _switchPlayer();
+        
+        playerTurnMsg.textContent = `Player ${players[currPlayer]}'s Turn`;
     };
 
     const clearBoard = () => {
         currPlayer = 0;
+        playerDisplay = false;
+        gameOver = false;
+        if(playerDisplay) {
+            _togglePlayerDisplay();
+            playerTurnMsg.textContent = ``;
+        }
         playerDisplay = false;
         let counter = 0;
         for(let i = 0; i < board.length; i++) {
@@ -146,7 +166,6 @@ const gameboard = (function () {
                 boardElements[counter++].textContent = '';
             }
         }
-        gameOver = false;
     };
 
     const _printBoard = () => {

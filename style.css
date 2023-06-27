@@ -85,17 +85,17 @@ body {
     align-items: center;
 }
 
-.custom-select,
+.start-btn,
 .player-turn {
     display: none;
 }
 
-.custom-select {
+.start-btn {
     position: relative;
     margin: var(--margin-main);
 }
 
-.custom-select select {
+.start-btn select {
     appearance: none;
 
     background-color: transparent;
@@ -109,7 +109,7 @@ body {
     text-align: center;
 }
 
-.custom-select.active {
+.start-btn.active {
     display: flex;
     justify-content: space-evenly;
     align-items: center;

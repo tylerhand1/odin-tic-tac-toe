@@ -16,7 +16,6 @@ const gameboard = (function () {
     let moves = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
     let state = State(moves);
     let turn = 0;
-    let aiEnabled = false;
     let started = false;
 
     const turnLimit = 9;
@@ -29,9 +28,6 @@ const gameboard = (function () {
     const playerTurn = document.querySelector('.player-turn');
     const playerTurnMsg = document.querySelector('.player-turn h3');
 
-    // Player mode
-    const mode = document.querySelector('#game-type');
-
     const createBtnEventListeners = () => {
         startBtn.addEventListener('click', _start);
         restartBtn.addEventListener('click', _clearBoard);
@@ -43,11 +39,6 @@ const gameboard = (function () {
         if(!playerDisplay) {
             _togglePlayerDisplay();
             playerDisplay = true;
-        }
-        if(mode[0].selected) {
-            aiEnabled = false;
-        } else {
-            aiEnabled = true;
         }
         playerTurnMsg.textContent = `Player ${state.toMove === 0 ? 'X' : 'O'}'s Turn`;
     };
@@ -194,23 +185,6 @@ const gameboard = (function () {
         if(_gameOver(state)) {
             return state.utility;
         }
-
-        if(aiEnabled) {
-            // Call function to determine minmax move
-            _alphabetaMove();
-        }
-    };
-
-    const _maxValue = (alpha, beta) => {
-
-    };
-
-    const _minValue = (alpha, beta) => {
-
-    };
-
-    const _alphabetaMove = () => {
-
     };
 
     const _clearBoard = () => {

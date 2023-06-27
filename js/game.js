@@ -24,7 +24,7 @@ const gameboard = (function () {
     const restartBtn = document.querySelector('#restart-btn');
 
     // Display elements
-    const customSelect = document.querySelector('.custom-select');
+    const customSelect = document.querySelector('.start-btn');
     const playerTurn = document.querySelector('.player-turn');
     const playerTurnMsg = document.querySelector('.player-turn h3');
 

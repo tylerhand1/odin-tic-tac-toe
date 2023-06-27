@@ -17,6 +17,7 @@ const gameboard = (function () {
     let state = State(moves);
     let turn = 0;
     let aiEnabled = false;
+    let started = false;
 
     const turnLimit = 9;
     const boardElements = [...document.querySelectorAll('.game-space')];
@@ -37,6 +38,7 @@ const gameboard = (function () {
     };
 
     const _start = () => {
+        started = true;
         _createEventListeners();
         if(!playerDisplay) {
             _togglePlayerDisplay();
@@ -155,6 +157,9 @@ const gameboard = (function () {
     };
 
     const makeMove = (e) => {
+        if(!started) {
+            return;
+        }
         // Convert data-index to (row, col)
         let row, col;
         if(e.target.attributes[1].value < 3) {
@@ -175,7 +180,6 @@ const gameboard = (function () {
         state = _result([row, col], state);
         _updateBoard();
         let result = _utility();
-        console.log(result)
         if(result === 0) {
             // Check for tie
             if(turn === turnLimit) {
@@ -197,11 +201,20 @@ const gameboard = (function () {
         }
     };
 
+    const _maxValue = (alpha, beta) => {
+
+    };
+
+    const _minValue = (alpha, beta) => {
+
+    };
+
     const _alphabetaMove = () => {
 
     };
 
     const _clearBoard = () => {
+        started = false;
         state = State(moves);
         if(playerDisplay) {
             _togglePlayerDisplay();
@@ -219,10 +232,6 @@ const gameboard = (function () {
     return {
         createBtnEventListeners,
     };
-})();
-
-const AIPlayer = (function () {
-    return "hello"
 })();
 
 gameboard.createBtnEventListeners();
